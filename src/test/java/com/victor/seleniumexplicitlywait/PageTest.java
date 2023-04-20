@@ -46,7 +46,6 @@ class PageTest {
     @Test
     void alert() {
         page.alertBtn.click();
-
         wait.until(alertIsPresent());
 
         assertEquals("I got opened after 5 secods", driver.switchTo().alert().getText());
@@ -57,7 +56,6 @@ class PageTest {
         assertEquals("site", page.populateText.getText());
 
         page.populateTextBtn.click();
-
         wait.until(textToBe(By.id("h2"), "Selenium Webdriver"));
 
         assertEquals("Selenium Webdriver", page.populateText.getText());
@@ -65,20 +63,22 @@ class PageTest {
 
     @Test
     void displayButton() {
-        page.displayOtherBtn.click();
+        assertFalse(page.hiddenBtn.isDisplayed());
 
+        page.displayOtherBtn.click();
         wait.until(visibilityOf(page.hiddenBtn));
 
-        assertEquals("Enabled", page.hiddenBtn.getText());
+        assertTrue(page.hiddenBtn.isDisplayed());
     }
 
     @Test
     void enableButton() {
-        page.enableBtn.click();
+        assertFalse(page.disableBtn.isEnabled());
 
+        page.enableBtn.click();
         wait.until(elementToBeClickable(page.disableBtn));
 
-        assertEquals("Button", page.disableBtn.getText());
+        assertTrue(page.disableBtn.isEnabled());
     }
 
     @Test
@@ -86,7 +86,6 @@ class PageTest {
         assertFalse(page.checkbox.isSelected());
 
         page.checkboxBtn.click();
-
         wait.until(elementToBeSelected(page.checkbox));
 
         assertTrue(page.checkbox.isSelected());
